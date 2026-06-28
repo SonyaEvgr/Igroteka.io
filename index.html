@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -41,6 +41,7 @@
                                 <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
                             </div>
                             <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" onclick="openProfilePage(); toggleUserDropdown()"><i class="fas fa-user"></i> Мой профиль</button>
                             <button class="dropdown-item" onclick="openProfileModal(); toggleUserDropdown()"><i class="fas fa-trophy"></i> Мои достижения</button>
                             <button class="dropdown-item" onclick="openChatSupport(); toggleUserDropdown()"><i class="fas fa-comments"></i> Поддержка</button>
                             <button class="dropdown-item" id="adminPanelLink" style="display:none;" onclick="openAdminPage(); toggleUserDropdown()"><i class="fas fa-cog"></i> Панель администратора</button>
@@ -102,8 +103,8 @@
                 <h2>Добро пожаловать!</h2>
                 <p class="auth-subtitle">Войдите, чтобы оценивать игры и получать награды</p>
                 <div class="form-group">
-                    <label>Имя пользователя</label>
-                    <input type="text" id="loginUsername" placeholder="Введите логин" autocomplete="username">
+                    <label>Логин или Email</label>
+                    <input type="text" id="loginUsername" placeholder="Введите логин или email" autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label>Пароль</label>
@@ -126,6 +127,10 @@
                 <div class="form-group">
                     <label>Логин</label>
                     <input type="text" id="regUsername" placeholder="Придумайте логин" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="example@mail.ru" autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label>Пароль</label>
@@ -185,22 +190,50 @@
         </div>
     </div>
 
-    <!-- МОДАЛ: ЧАТ ПОДДЕРЖКИ -->
+    <!-- МОДАЛ: ПОДДЕРЖКА (письмо) -->
     <div id="chatModal" class="modal">
-        <div class="modal-content chat-modal-content">
+        <div class="modal-content support-letter-modal">
             <button class="modal-close-btn" onclick="closeModal('chatModal')"><i class="fas fa-times"></i></button>
-            <div class="chat-header">
-                <div class="chat-header-icon"><i class="fas fa-headset"></i></div>
+            <div class="support-letter-header">
+                <div class="support-letter-header-icon"><i class="fas fa-envelope"></i></div>
                 <div>
-                    <h3>Служба поддержки</h3>
-                    <span class="chat-status"><span class="status-dot"></span> Онлайн</span>
+                    <h3>Написать в поддержку</h3>
+                    <span style="font-size:0.82rem;opacity:0.8">Мы ответим в ближайшее время</span>
                 </div>
             </div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Написать сообщение..." onkeydown="if(event.key==='Enter')sendChatMessage()">
-                <button onclick="sendChatMessage()" class="btn-primary"><i class="fas fa-paper-plane"></i></button>
+            <div class="support-letter-body">
+                <div class="form-group">
+                    <label>Тема обращения *</label>
+                    <input type="text" id="supportSubject" placeholder="Кратко опишите проблему">
+                </div>
+                <div class="form-group">
+                    <label>Категория</label>
+                    <select id="supportCategory">
+                        <option value="general">Общий вопрос</option>
+                        <option value="bug">Ошибка / баг</option>
+                        <option value="game">Вопрос по игре</option>
+                        <option value="account">Аккаунт</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Сообщение *</label>
+                    <textarea id="supportMessage" rows="4" placeholder="Подробно опишите ваш вопрос или проблему..."></textarea>
+                </div>
+                <button class="btn-primary btn-full" onclick="sendSupportLetter()"><i class="fas fa-paper-plane"></i> Отправить обращение</button>
+                <div class="my-tickets-list" id="myTicketsList"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА ПРОФИЛЯ -->
+    <div id="profilePage" class="full-page" style="display:none;">
+        <div class="full-page-header">
+            <h2><i class="fas fa-user"></i> Мой профиль</h2>
+            <button onclick="closeProfilePage()" class="btn-secondary"><i class="fas fa-arrow-left"></i> Назад</button>
+        </div>
+        <div class="full-page-body container">
+            <div id="profilePageContent"></div>
         </div>
     </div>
 
@@ -244,6 +277,11 @@
     <script src="games/word-memory.js"></script>
     <script src="games/logic-puzzle.js"></script>
     <script src="games/english-words.js"></script>
+    <script src="games/tetris.js"></script>
+    <script src="games/geometry.js"></script>
+    <script src="games/basketball.js"></script>
+    <script src="games/gramotey.js"></script>
+    <script src="games/fairy-tale.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
